@@ -1,0 +1,105 @@
+name: Deploy docs to GitHub Pages
+
+on:
+  # Deploy whenever you push to master.
+  push:
+    branches: [master]
+  # Allow manual runs from the Actions tab.
+  workflow_dispatch:
+  # Lets the Hurricane repo trigger a rebuild when a new release is published,
+  # so the auto-generated Changelog stays current. See the
+  # "FUTURE: instant changelog updates" note at the bottom of this file for the
+  # one-time setup required in the Hurricane repo.
+  repository_dispatch:
+    types: [new-release]
+
+# Permissions required for GitHub Pages deployment.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment; don't cancel in-progress runs.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # needed for VitePress "last updated" timestamps
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Install dependencies
+        run: npm ci
+      - name: Build with VitePress
+        run: npm run docs:build
+        env:
+          # Lets the Changelog data loader call the GitHub API with a higher rate
+          # limit (1000/hr) instead of the anonymous 60/hr. Provided automatically.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+# ---------------------------------------------------------------------------
+# FUTURE: instant Changelog updates on every new Hurricane release
+# ---------------------------------------------------------------------------
+# The Changelog page is auto-generated at build time from the Hurricane repo's
+# GitHub Releases. To make it refresh the INSTANT a release is published (instead
+# of only when this docs repo is pushed), do this one-time setup:
+#
+# 1. Create a token that can trigger this workflow:
+#    - Easiest: a classic Personal Access Token (PAT) with the "repo" scope, OR
+#    - A fine-grained PAT scoped to the HurricaneDocs repo with
+#      "Contents: read and write" (the dispatch endpoint requires write access).
+#
+# 2. In the Hurricane repo (Nightdawg/Hurricane), add that token as an Actions
+#    secret named DOCS_DISPATCH_TOKEN
+#    (Settings -> Secrets and variables -> Actions -> New repository secret).
+#
+# 3. In the Hurricane repo, add a workflow file at
+#    .github/workflows/notify-docs.yml with these contents:
+#
+#      name: Notify docs on release
+#      on:
+#        release:
+#          types: [published]
+#      jobs:
+#        notify:
+#          runs-on: ubuntu-latest
+#          steps:
+#            - name: Trigger HurricaneDocs rebuild
+#              run: |
+#                curl -sS -X POST \
+#                  -H "Accept: application/vnd.github+json" \
+#                  -H "Authorization: Bearer ${{ secrets.DOCS_DISPATCH_TOKEN }}" \
+#                  -H "X-GitHub-Api-Version: 2022-11-28" \
+#                  https://api.github.com/repos/Nightdawg/HurricaneDocs/dispatches \
+#                  -d '{"event_type":"new-release"}'
+#
+# Publishing a release in Hurricane will then POST a repository_dispatch event of
+# type "new-release" to this repo, which the trigger near the top of this file
+# catches and rebuilds + redeploys the docs (with the refreshed Changelog).
+# ---------------------------------------------------------------------------

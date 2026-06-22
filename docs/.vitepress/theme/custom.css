@@ -1,0 +1,40 @@
+/**
+ * Hurricane theme overrides.
+ * Tweak the accent colors below to re-brand the whole site.
+ * Full list of CSS variables you can override:
+ * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
+ */
+
+:root {
+  /* Primary "storm blue" accent used for links, buttons, highlights. */
+  --vp-c-brand-1: #1f87c0;
+  --vp-c-brand-2: #2b9bd6;
+  --vp-c-brand-3: #1a76a8;
+  --vp-c-brand-soft: rgba(43, 155, 214, 0.14);
+}
+
+.dark {
+  --vp-c-brand-1: #4fb4e6;
+  --vp-c-brand-2: #2b9bd6;
+  --vp-c-brand-3: #1f87c0;
+  --vp-c-brand-soft: rgba(79, 180, 230, 0.16);
+}
+
+/* Home page hero styling - the big title gradient and the glow behind the logo. */
+:root {
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(120deg, #4fb4e6 30%, #6f7bf7);
+
+  --vp-home-hero-image-background-image: linear-gradient(
+    45deg,
+    rgba(43, 155, 214, 0.6) 30%,
+    rgba(111, 123, 247, 0.6)
+  );
+  --vp-home-hero-image-filter: blur(48px);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --vp-home-hero-image-filter: blur(64px);
+  }
+}

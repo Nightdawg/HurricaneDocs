@@ -22,7 +22,7 @@
 - Owner / GitHub user: **Nightdawg**.
 
 ### Useful links
-- Live site (once deployed): https://nightdawg.github.io/HurricaneDocs/
+- Live site: https://nightdawg.github.io/HurricaneDocs/ (DEPLOYED and working)
 - Discord: https://discord.gg/7Ct4t6uME6
 - Forum thread: https://www.havenandhearth.com/forum/viewtopic.php?t=76544
 - Steam Workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=3423755273
@@ -125,6 +125,14 @@ HurricaneDocs/
 - **Changelog is auto-generated** from the Hurricane repo's GitHub Releases at build time
   (see `docs/changelog/releases.data.ts`). It renders all releases newest-first. Falls back
   gracefully if the GitHub API is unreachable during a build.
+  - It is a **live mirror, not an append-only log**: every rebuild fetches the *current*
+    list of releases and regenerates the whole page. If a release is edited or deleted on
+    GitHub, the next rebuild reflects that. GitHub Releases are the single source of truth.
+- **Instant changelog updates on release are LIVE.** The Hurricane repo has a
+  `.github/workflows/notify-docs.yml` (commit `b1a69fdd8`) that, on `release: published`,
+  POSTs a `repository_dispatch` (`new-release`) to HurricaneDocs using the
+  `DOCS_DISPATCH_TOKEN` secret. The docs `deploy.yml` listens for that event and
+  rebuilds + redeploys. So publishing a Hurricane release now auto-refreshes the changelog.
 - **Custom components:** `Video.vue` (MP4 embeds, base-path safe) and `Changelog.vue`
   (releases timeline). Registered in `docs/.vitepress/theme/index.ts`.
 
@@ -178,13 +186,15 @@ add them). Examples to replace:
 
 ## 9. Open / future tasks
 
-- **Instant changelog updates on release** (future, owner action): add a
-  `DOCS_DISPATCH_TOKEN` secret + a `notify-docs.yml` workflow in the **Hurricane** repo so
-  publishing a release triggers a docs rebuild. Full copy-paste instructions are in the
-  bottom comment of `.github/workflows/deploy.yml`. The docs `deploy.yml` already listens
-  for the `repository_dispatch` event (`new-release`).
-- **First deploy** (owner action, one-time): create the GitHub repo, push `master`, then set
-  GitHub -> Settings -> Pages -> Source: "GitHub Actions".
+- **Instant changelog updates on release** (DONE): the `DOCS_DISPATCH_TOKEN` secret +
+  `notify-docs.yml` workflow are set up in the **Hurricane** repo, and the docs `deploy.yml`
+  listens for the `repository_dispatch` event (`new-release`). Publishing a Hurricane
+  release now triggers a docs rebuild automatically. (Original copy-paste instructions
+  remain in the bottom comment of `.github/workflows/deploy.yml` for reference.)
+- **First deploy** (DONE): repo created, `master` pushed, GitHub -> Settings -> Pages ->
+  Source set to "GitHub Actions". Site is live at https://nightdawg.github.io/HurricaneDocs/.
+  Note: the very first workflow run failed because it ran on the push *before* Pages was
+  enabled; re-running the workflow after enabling Pages fixed it.
 
 ---
 

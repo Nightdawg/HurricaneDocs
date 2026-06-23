@@ -212,10 +212,12 @@ When working in this repo, at the end of any change that affects the project:
 3. **Verify the build**: run `npm run docs:build` and confirm it succeeds.
 4. Keep edits surgical and Markdown-first; prefer small reusable Vue components for layout.
 5. **Committing:** the owner has asked the AI to commit changes as part of doing the work
-   (you no longer need to ask first). Use clear messages (e.g. `docs: add <feature> page`),
-   keep one logical change per commit where practical, include the
-   `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>` trailer, and push
-   to `origin/master` (which auto-deploys). Still update this file in the same commit/session.
+   (you no longer need to ask first), but **do NOT push** - the owner pushes manually. Use
+   clear messages (e.g. `docs: add <feature> page`), keep one logical change per commit
+   where practical, and include the
+   `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>` trailer. Leave the
+   commit(s) on `master` for the owner to review and push. Still update this file in the
+   same commit/session.
 
 > Note: there is no automatic process that updates this file on every git commit. It is kept
 > current by the AI (and the owner) as part of doing the work. If the owner ever wants

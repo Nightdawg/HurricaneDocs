@@ -18,9 +18,9 @@ export default defineConfig({
   ignoreDeadLinks: true,
 
   // Pages excluded from the build entirely (not rendered, not in search).
-  // The example feature page is kept in the repo as a rendered reference but
-  // hidden from the published site. Remove it from this list to publish it.
-  srcExclude: ['features/example-feature.md'],
+  // These are kept in the repo as references but hidden from the published site.
+  // Remove a path from this list to publish that page.
+  srcExclude: ['features/example-feature.md', 'features/template.md'],
 
   // Raw <head> tags. Because these are not processed by VitePress, the base
   // path must be included manually for local asset URLs.
@@ -73,10 +73,6 @@ export default defineConfig({
           items: [
             { text: 'Overview', link: '/features/' },
           ],
-        },
-        {
-          text: 'Reference',
-          items: [{ text: 'Feature Page Template', link: '/features/template' }],
         },
       ],
     },

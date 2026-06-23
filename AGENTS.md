@@ -152,7 +152,7 @@ HurricaneDocs/
 | Troubleshooting & FAQ | `docs/guide/troubleshooting.md` | Done |
 | Features overview | `docs/features/index.md` | Placeholder list |
 | Example feature | `docs/features/example-feature.md` | Hidden from site (excluded via `srcExclude` in config.mts); kept as a rendered reference. Delete once real pages exist. |
-| Feature template | `docs/features/template.md` | Reference (keep) |
+| Feature template | `docs/features/template.md` | Hidden from site (excluded via `srcExclude`); copy it to start a new feature page. |
 | Changelog | `docs/changelog/index.md` | Done (auto-generated) |
 
 ---

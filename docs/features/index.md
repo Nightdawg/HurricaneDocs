@@ -4,7 +4,8 @@ Welcome to the Hurricane feature library. Each feature gets its own page with
 screenshots, GIFs, and short videos that show exactly how it works.
 
 > 🚧 This section is just getting started. Pages will be filled in over time.
-> The [Feature Page Template](./template) is what you copy to add a new one.
+> To add a new page, copy `docs/features/template.md` to a new file in
+> `docs/features/` and write your content.
 
 ## Categories
 

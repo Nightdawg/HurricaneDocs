@@ -22,6 +22,8 @@ These are the kinds of features Hurricane offers. Pages will be added under each
 
 - [Login Screen](./login-screen) - the first screen you see, with its accounts list, login
   options, server status, and more.
+- [Character Selection Screen](./character-selection) - pick a character, check your account status,
+  or log back out.
 
 <!--
   Add new feature links here as you create pages, for example:

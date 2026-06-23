@@ -85,3 +85,7 @@ and jump to the community Discord.
 7. **Login screen style & music** (bottom-right) - pick the login screen background style,
    or choose **Random!** for a different one each time you
    reach the login screen. The slider below sets the login screen music volume.
+
+---
+
+Once you log in, you reach the [Character Selection Screen](./character-selection).

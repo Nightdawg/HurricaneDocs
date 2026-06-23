@@ -163,6 +163,7 @@ HurricaneDocs/
 | Troubleshooting & FAQ | `docs/guide/troubleshooting.md` | Done |
 | Features overview | `docs/features/index.md` | Placeholder list |
 | Login Screen | `docs/features/login-screen.md` | Done (interactive Hotspots screenshot) |
+| Character Selection Screen | `docs/features/character-selection.md` | Done (interactive Hotspots screenshot) |
 | Example feature | `docs/features/example-feature.md` | Hidden from site (excluded via `srcExclude` in config.mts); kept as a rendered reference. Delete once real pages exist. |
 | Feature template | `docs/features/template.md` | Hidden from site (excluded via `srcExclude`); copy it to start a new feature page. |
 | Changelog | `docs/changelog/index.md` | Done (auto-generated) |
@@ -177,6 +178,7 @@ Track which Hurricane features have dedicated doc pages. Update as pages are add
 | Feature / category | Doc page | Status |
 | --- | --- | --- |
 | Login Screen | `docs/features/login-screen.md` | Documented (interactive Hotspots) |
+| Character Selection Screen | `docs/features/character-selection.md` | Documented (interactive Hotspots) |
 | Alarm sounds (animals, combat, priority targets) | _none yet_ | Not documented |
 | Map icon presets / custom minimap markers | _none yet_ | Not documented |
 | Private web-map server integration | _none yet_ | Not documented |
@@ -198,6 +200,14 @@ add them). Examples to replace:
 - [ ] Document the first batch of "headline" features with screenshots.
 - [ ] Decide whether to delete the example-feature page once real pages exist.
 - [ ] Consider a "What's new" highlight on the home page.
+
+### Client "walkthrough" series (document features in the order a user meets them)
+- [x] Login Screen (`docs/features/login-screen.md`) - interactive Hotspots screenshot.
+- [x] Character Selection Screen (`docs/features/character-selection.md`) - interactive Hotspots.
+- [ ] **TODO (owner asked):** add a short closing line at the bottom of the Login Screen page
+  linking to Character Selection (e.g. "Once you log in, you reach character selection ->").
+  Now actionable since the Character Selection page exists.
+- [ ] Next walkthrough page: the in-game screen / HUD (after Character Selection).
 
 ---
 

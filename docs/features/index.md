@@ -3,9 +3,8 @@
 Welcome to the Hurricane feature library. Each feature gets its own page with
 screenshots, GIFs, and short videos that show exactly how it works.
 
-> 🚧 This section is just getting started. Pages will be filled in over time -
-> the [Example Feature](./example-feature) page shows the format, and the
-> [Feature Page Template](./template) is what you copy to add a new one.
+> 🚧 This section is just getting started. Pages will be filled in over time.
+> The [Feature Page Template](./template) is what you copy to add a new one.
 
 ## Categories
 
@@ -20,9 +19,10 @@ These are the kinds of features Hurricane offers. Pages will be added under each
 
 ## All Feature Pages
 
-- [Example Feature](./example-feature) - a worked example showing the page format.
+_No feature pages yet. They'll be listed here as they're added._
 
 <!--
-  Add new feature links above this comment as you create pages.
+  Add new feature links here as you create pages, for example:
+  - [Alarm Sounds](./alarm-sounds) - short description.
   Also remember to add the page to the sidebar in docs/.vitepress/config.mts.
 -->

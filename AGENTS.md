@@ -151,7 +151,7 @@ HurricaneDocs/
 | Launching the Client | `docs/guide/launching.md` | Done |
 | Troubleshooting & FAQ | `docs/guide/troubleshooting.md` | Done |
 | Features overview | `docs/features/index.md` | Placeholder list |
-| Example feature | `docs/features/example-feature.md` | Example/demo (delete once real pages exist) |
+| Example feature | `docs/features/example-feature.md` | Hidden from site (excluded via `srcExclude` in config.mts); kept as a rendered reference. Delete once real pages exist. |
 | Feature template | `docs/features/template.md` | Reference (keep) |
 | Changelog | `docs/changelog/index.md` | Done (auto-generated) |
 

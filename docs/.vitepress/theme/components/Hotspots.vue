@@ -21,6 +21,10 @@ import { withBase } from 'vitepress'
  *
  * x, y = top-left corner of the region (in % of the image).
  * w, h = width and height of the region (in % of the image).
+ *
+ * Optional per-region `place` forces which side the callout appears on:
+ *   'top' | 'bottom' | 'left' | 'right'. If omitted, it's chosen automatically
+ *   based on the region's position so it stays on-screen.
  */
 interface Region {
   n: number | string
@@ -30,6 +34,7 @@ interface Region {
   y: number
   w: number
   h: number
+  place?: 'top' | 'bottom' | 'left' | 'right'
 }
 
 const props = withDefaults(
@@ -39,12 +44,22 @@ const props = withDefaults(
     alt?: string
     /** Image aspect ratio as "width / height" (keeps the stage from collapsing). */
     ratio?: string
+    /** Pop-out zoom factor for the active region. */
+    zoom?: number
   }>(),
   {
     alt: 'Interactive screenshot',
     ratio: '16 / 9',
+    zoom: 1.2,
   },
 )
+
+// ----------------------------------------------------------------------------
+// DEBUG TOGGLE: set to true to outline + tint every hotspot region on ALL
+// Hotspots across the whole site. Handy when positioning/sizing regions.
+// Leave false for the normal (invisible until hover) look.
+// ----------------------------------------------------------------------------
+const DEBUG_REGIONS = false
 
 // A Vite import (recommended) yields an already-resolved, base-aware URL that
 // must be used as-is. Only apply withBase to bare relative paths.
@@ -59,12 +74,17 @@ const hide = () => (active.value = null)
 const toggle = (i: number) => (active.value = active.value === i ? null : i)
 
 // Base position/size for a region's hit area + marker.
+// transform-origin is set from the region's center position within the image so
+// that the zoom grows toward the image center (edge regions don't spill outward).
 function regionStyle(r: Region) {
+  const cx = r.x + r.w / 2
+  const cy = r.y + r.h / 2
   return {
     left: `${r.x}%`,
     top: `${r.y}%`,
     width: `${r.w}%`,
     height: `${r.h}%`,
+    transformOrigin: `${cx}% ${cy}%`,
   }
 }
 
@@ -81,36 +101,53 @@ function cropStyle(r: Region) {
   }
 }
 
-// Decide where the callout sits so it never runs off the image edges.
+// Decide where the callout sits. If `place` is set on the region it is forced to
+// that side; otherwise the side is chosen automatically from the region's
+// position so the callout stays on-screen. The callout is offset by the region's
+// zoom expansion so it never overlaps the enlarged (popped-out) region.
 function calloutStyle(r: Region) {
   const cx = r.x + r.w / 2
   const cy = r.y + r.h / 2
+  const gap = 2
+  const expandX = ((props.zoom - 1) / 2) * r.w
+  const expandY = ((props.zoom - 1) / 2) * r.h
   const style: Record<string, string> = {}
 
-  // Horizontal anchoring.
-  if (cx < 33) {
-    style.left = `${r.x}%`
-  } else if (cx > 67) {
-    style.right = `${100 - (r.x + r.w)}%`
+  const place = r.place ?? (cy < 50 ? 'bottom' : 'top')
+
+  if (place === 'top' || place === 'bottom') {
+    // Horizontal anchoring follows the region's horizontal position.
+    if (cx < 33) {
+      style.left = `${r.x}%`
+    } else if (cx > 67) {
+      style.right = `${100 - (r.x + r.w)}%`
+    } else {
+      style.left = `${cx}%`
+      style.transform = 'translateX(-50%)'
+    }
+    if (place === 'bottom') {
+      style.top = `${r.y + r.h + expandY + gap}%`
+    } else {
+      style.bottom = `${100 - r.y + expandY + gap}%`
+    }
   } else {
-    style.left = `${cx}%`
-    style.transform = 'translateX(-50%)'
+    // Left / right placement: vertically centered on the region.
+    style.top = `${cy}%`
+    style.transform = 'translateY(-50%)'
+    if (place === 'right') {
+      style.left = `${r.x + r.w + expandX + gap}%`
+    } else {
+      style.right = `${100 - r.x + expandX + gap}%`
+    }
   }
 
-  // Vertical placement: below the region if it's in the top half, else above.
-  const gap = 2
-  if (cy < 50) {
-    style.top = `${r.y + r.h + gap}%`
-  } else {
-    style.bottom = `${100 - r.y + gap}%`
-  }
   return style
 }
 </script>
 
 <template>
-  <figure class="hs">
-    <div class="hs__stage" :class="{ 'is-active': active !== null }" :style="{ '--hs-ratio': ratio }">
+  <figure class="hs" :class="{ 'hs--debug': DEBUG_REGIONS }">
+    <div class="hs__stage" :class="{ 'is-active': active !== null }" :style="{ '--hs-ratio': ratio, '--hs-zoom': zoom }">
       <img class="hs__img" :src="resolvedSrc" :alt="alt" />
 
       <div class="hs__dim" aria-hidden="true" />
@@ -182,7 +219,7 @@ function calloutStyle(r: Region) {
 .hs__dim {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.65);
   opacity: 0;
   transition: opacity 0.18s ease;
   pointer-events: none;
@@ -208,16 +245,22 @@ function calloutStyle(r: Region) {
   outline-offset: 0;
 }
 
+/* Debug mode (pass `debug` to <Hotspots>): outline + tint every region so you
+   can see and fine-tune their positions and sizes. Off by default. */
+.hs--debug .hs__region:not(.is-on) {
+  outline: 2px solid var(--vp-c-brand-1);
+  background-color: rgba(43, 155, 214, 0.18);
+}
+
 .hs__region:focus-visible {
   outline-color: var(--vp-c-brand-1);
 }
 
-/* The active region: show the popped-out crop, lift and outline it. */
+/* The active region: show the popped-out crop and lift it (no outline). */
 .hs__region.is-on {
   z-index: 3;
-  transform: scale(1.08);
+  transform: scale(var(--hs-zoom, 1.2));
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-  outline: 3px solid var(--vp-c-brand-1);
   border-radius: 6px;
 }
 
@@ -243,7 +286,7 @@ function calloutStyle(r: Region) {
 
 .hs__region.is-on .hs__marker {
   /* Keep the marker a constant visual size while the region scales up. */
-  transform: scale(0.92);
+  transform: scale(calc(1 / var(--hs-zoom, 1.2)));
 }
 
 /* Floating explanation callout. */

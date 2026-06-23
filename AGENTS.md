@@ -80,7 +80,8 @@ HurricaneDocs/
          ├─ custom.css               # accent colors / branding
          └─ components/
             ├─ Video.vue             # <Video src="media/x.mp4" /> embed
-            └─ Changelog.vue         # renders the releases timeline
+            ├─ Changelog.vue         # renders the releases timeline
+            └─ Hotspots.vue          # interactive screenshot with hover/tap hotspots
 ```
 
 ---
@@ -137,8 +138,18 @@ HurricaneDocs/
   POSTs a `repository_dispatch` (`new-release`) to HurricaneDocs using the
   `DOCS_DISPATCH_TOKEN` secret. The docs `deploy.yml` listens for that event and
   rebuilds + redeploys. So publishing a Hurricane release now auto-refreshes the changelog.
-- **Custom components:** `Video.vue` (MP4 embeds, base-path safe) and `Changelog.vue`
-  (releases timeline). Registered in `docs/.vitepress/theme/index.ts`.
+- **Custom components:** `Video.vue` (MP4 embeds), `Changelog.vue` (releases timeline), and
+  `Hotspots.vue` (interactive screenshot: percentage-based regions with always-visible
+  numbered markers; hover/tap highlights a region, dims the rest, pops it out, shows a
+  callout). Registered in `docs/.vitepress/theme/index.ts`.
+- **Component image gotcha (IMPORTANT):** images used *inside* custom components must be
+  passed as a **Vite import**, not a bare `"media/..."` string. `withBase()` did NOT resolve
+  bare strings correctly in this component context (the rendered `<img src>` stayed relative
+  and 404'd to the dev server's HTML fallback, showing a broken image). The fix/pattern: in
+  the page's `<script setup>` do `import img from './images/foo.jpg'` and pass `:src="img"`.
+  `Hotspots.vue` treats already-resolved URLs (starting with `/`, `http`, `data:`, `blob:`)
+  as-is. NOTE: `Video.vue` still uses the old `withBase` string pattern - prefer the import
+  pattern there too when adding a real video (see Open tasks).
 
 ---
 
@@ -151,6 +162,7 @@ HurricaneDocs/
 | Launching the Client | `docs/guide/launching.md` | Done |
 | Troubleshooting & FAQ | `docs/guide/troubleshooting.md` | Done |
 | Features overview | `docs/features/index.md` | Placeholder list |
+| Login Screen | `docs/features/login-screen.md` | Done (interactive Hotspots screenshot) |
 | Example feature | `docs/features/example-feature.md` | Hidden from site (excluded via `srcExclude` in config.mts); kept as a rendered reference. Delete once real pages exist. |
 | Feature template | `docs/features/template.md` | Hidden from site (excluded via `srcExclude`); copy it to start a new feature page. |
 | Changelog | `docs/changelog/index.md` | Done (auto-generated) |
@@ -164,6 +176,7 @@ Track which Hurricane features have dedicated doc pages. Update as pages are add
 
 | Feature / category | Doc page | Status |
 | --- | --- | --- |
+| Login Screen | `docs/features/login-screen.md` | Documented (interactive Hotspots) |
 | Alarm sounds (animals, combat, priority targets) | _none yet_ | Not documented |
 | Map icon presets / custom minimap markers | _none yet_ | Not documented |
 | Private web-map server integration | _none yet_ | Not documented |
@@ -199,6 +212,12 @@ add them). Examples to replace:
   Source set to "GitHub Actions". Site is live at https://nightdawg.github.io/HurricaneDocs/.
   Note: the very first workflow run failed because it ran on the push *before* Pages was
   enabled; re-running the workflow after enabling Pages fixed it.
+- **Video component media (TODO)**: `Video.vue` still resolves its `src` via `withBase` on a
+  bare `"media/..."` string. That same pattern broke for `Hotspots` (relative `<img src>` ->
+  404 -> broken). When a real video is added, switch `Video.vue` + `template.md` +
+  `example-feature.md` to the Vite-import pattern (`import clip from './images/foo.mp4'`,
+  then `:src="clip"`), and make `Video.vue` pass already-resolved URLs through unchanged
+  (same guard as `Hotspots.vue`).
 
 ---
 

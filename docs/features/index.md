@@ -20,7 +20,8 @@ These are the kinds of features Hurricane offers. Pages will be added under each
 
 ## All Feature Pages
 
-_No feature pages yet. They'll be listed here as they're added._
+- [Login Screen](./login-screen) - the first screen you see, with its accounts list, login
+  options, server status, and more.
 
 <!--
   Add new feature links here as you create pages, for example:

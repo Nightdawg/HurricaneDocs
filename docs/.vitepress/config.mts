@@ -72,6 +72,7 @@ export default defineConfig({
           text: 'Features',
           items: [
             { text: 'Overview', link: '/features/' },
+            { text: 'Login Screen', link: '/features/login-screen' },
           ],
         },
       ],

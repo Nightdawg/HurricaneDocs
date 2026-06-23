@@ -71,7 +71,19 @@ const resolvedSrc = computed(() =>
 const active = ref<number | null>(null)
 const show = (i: number) => (active.value = i)
 const hide = () => (active.value = null)
-const toggle = (i: number) => (active.value = active.value === i ? null : i)
+
+// On hover-capable (mouse) devices, hovering already shows the region, so a
+// click should NOT deselect it - just keep it active (clicking does nothing
+// disruptive). On touch devices (no hover), tapping toggles the region.
+const onClick = (i: number) => {
+  const canHover =
+    typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches
+  if (canHover) {
+    active.value = i
+  } else {
+    active.value = active.value === i ? null : i
+  }
+}
 
 // Base position/size for a region's hit area + marker.
 // transform-origin is set from the region's center position within the image so
@@ -164,7 +176,7 @@ function calloutStyle(r: Region) {
         @mouseleave="hide"
         @focus="show(i)"
         @blur="hide"
-        @click="toggle(i)"
+        @click="onClick(i)"
       >
         <span class="hs__marker">{{ r.n }}</span>
       </button>

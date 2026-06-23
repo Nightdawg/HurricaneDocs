@@ -110,6 +110,10 @@ HurricaneDocs/
 - **Branding:** accent color is a "storm blue". Change colors in `custom.css`. Logo/favicon
   are in `docs/public/`.
 - **Footer:** message only, no "made with love" style copyright line (owner removed it).
+- **Screenshots / game assets:** in-game *Haven & Hearth* art (screenshots/GIFs/videos) is
+  the property of the game's developers (Seatribe - Jorb and Loftar), all rights reserved,
+  used with permission for documentation. The owner confirmed this verbally with the dev.
+  There is a "Credits & assets" note in the README; keep it accurate if asset usage changes.
 - **Base path:** if the repo is ever renamed or moved to a custom domain, update `base` in
   `config.mts` (e.g. `/NewName/`, or `/` for a root/custom domain) and the favicon href in
   `head`.
@@ -207,7 +211,11 @@ When working in this repo, at the end of any change that affects the project:
 2. **Honor the conventions** in section 4 (especially: hyphens, never long dashes).
 3. **Verify the build**: run `npm run docs:build` and confirm it succeeds.
 4. Keep edits surgical and Markdown-first; prefer small reusable Vue components for layout.
-5. Do not commit on the owner's behalf unless asked - the owner reviews changes first.
+5. **Committing:** the owner has asked the AI to commit changes as part of doing the work
+   (you no longer need to ask first). Use clear messages (e.g. `docs: add <feature> page`),
+   keep one logical change per commit where practical, include the
+   `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>` trailer, and push
+   to `origin/master` (which auto-deploys). Still update this file in the same commit/session.
 
 > Note: there is no automatic process that updates this file on every git commit. It is kept
 > current by the AI (and the owner) as part of doing the work. If the owner ever wants

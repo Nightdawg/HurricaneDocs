@@ -171,3 +171,14 @@ Deployment is automatic via GitHub Actions (`.github/workflows/deploy.yml`): eve
 
 > If you ever rename the repo or move to a custom domain, update `base` in
 > `docs/.vitepress/config.mts` accordingly (`'/NewRepoName/'`, or `'/'` for a root domain).
+
+---
+
+## Credits & assets
+
+Screenshots, GIFs, and videos of *Haven & Hearth* used in this documentation contain
+in-game art and assets that are the property of the game's developers (Seatribe - Jorb and
+Loftar), all rights reserved.They are used here with permission, solely to document the
+Hurricane client. *Haven & Hearth* is © Seatribe; this is an unofficial fan project and is
+not affiliated with or endorsed by Seatribe.
+

@@ -13,7 +13,7 @@ export default defineConfig({
   // If you ever move to a custom domain at the root, change this to '/'.
   base: '/HurricaneDocs/',
 
-  lastUpdated: true,
+  lastUpdated: false,
   cleanUrls: true,
   ignoreDeadLinks: true,
 

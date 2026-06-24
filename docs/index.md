@@ -3,10 +3,10 @@ layout: home
 
 hero:
   name: "Hurricane"
-  text: "A custom client for Haven & Hearth"
-  tagline: Built on the Vanilla client, kept up to date, and packed with quality-of-life features.
+  text: "Haven & Hearth Custom Client"
+  tagline: Built on the Vanilla client, kept up to date.
   image:
-    src: /logo.png
+    src: /logo-h.png
     alt: Hurricane logo
   actions:
     - theme: brand

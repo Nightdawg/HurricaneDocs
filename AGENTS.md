@@ -109,7 +109,10 @@ HurricaneDocs/
   a link instead - GitHub Pages has a 1 GB site limit and 100 MB per-file limit.
 - **Do NOT use Git LFS for media** - GitHub Pages does not serve LFS files (images break).
 - **Branding:** accent color is a "storm blue". Change colors in `custom.css`. Logo/favicon
-  are in `docs/public/`.
+  are in `docs/public/`. The home hero uses `docs/public/logo-h.png` - the isolated golden
+  "H" on a transparent background (extracted from the Hurricane app icon), with a soft drop
+  shadow + sizing/position tweaks applied in `custom.css` (`.VPHero .image-src` / hero rules).
+  The small nav logo and favicon still use the original `logo.png` / `favicon.png`.
 - **Footer:** message only, no "made with love" style copyright line (owner removed it).
 - **Screenshots / game assets:** in-game *Haven & Hearth* art (screenshots/GIFs/videos) is
   the property of the game's developers (Seatribe - Jorb and Loftar), all rights reserved,

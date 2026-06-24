@@ -6,37 +6,63 @@
  */
 
 :root {
-  /* Primary "storm blue" accent used for links, buttons, highlights. */
-  --vp-c-brand-1: #1f87c0;
-  --vp-c-brand-2: #2b9bd6;
-  --vp-c-brand-3: #1a76a8;
-  --vp-c-brand-soft: rgba(43, 155, 214, 0.14);
+  /* Primary "gold/orange" accent used for links, buttons, highlights.
+     Light mode uses a deeper burnt-orange so it stays readable on white. */
+  --vp-c-brand-1: #c27a0f;
+  --vp-c-brand-2: #db8f17;
+  --vp-c-brand-3: #a36508;
+  --vp-c-brand-soft: rgba(230, 142, 25, 0.16);
 }
 
 .dark {
-  --vp-c-brand-1: #4fb4e6;
-  --vp-c-brand-2: #2b9bd6;
-  --vp-c-brand-3: #1f87c0;
-  --vp-c-brand-soft: rgba(79, 180, 230, 0.16);
+  /* Brighter, saturated amber-gold for good contrast on dark backgrounds. */
+  --vp-c-brand-1: #fcbd42;
+  --vp-c-brand-2: #f0a31f;
+  --vp-c-brand-3: #db8c15;
+  --vp-c-brand-soft: rgba(252, 189, 66, 0.18);
+}
+
+/* Brand buttons (e.g. "Get Started"): a bit lighter than the link/accent color. */
+:root {
+  --vp-button-brand-bg: #c67805;
+  --vp-button-brand-hover-bg: #de8c0d;
+  --vp-button-brand-active-bg: #9c6002;
+}
+
+.dark {
+  --vp-button-brand-bg: #f3a00d;
+  --vp-button-brand-hover-bg: #fbb629;
+  --vp-button-brand-active-bg: #e38d0a;
 }
 
 /* Home page hero styling - the big title gradient and the glow behind the logo. */
 :root {
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: linear-gradient(120deg, #4fb4e6 30%, #6f7bf7);
+  --vp-home-hero-name-background: linear-gradient(120deg, #f9c233 10%, #e88a1c);
 
   --vp-home-hero-image-background-image: linear-gradient(
     45deg,
-    rgba(43, 155, 214, 0.6) 30%,
-    rgba(111, 123, 247, 0.6)
+    rgba(180, 185, 195, 0.45) 30%,
+    rgba(140, 146, 158, 0.45)
   );
-  --vp-home-hero-image-filter: blur(48px);
+  --vp-home-hero-image-filter: blur(56px);
 }
 
 @media (min-width: 640px) {
   :root {
-    --vp-home-hero-image-filter: blur(64px);
+    --vp-home-hero-image-filter: blur(72px);
   }
+}
+
+/* Shrink the glow's overall footprint while keeping a soft, spread-out fade.
+   Use a square (equal px) so it spreads evenly in all directions, regardless of
+   the portrait-shaped image container. */
+.VPHero .image-bg {
+  width: 260px;
+  height: 260px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Polished drop shadow on the hero logo (follows the H's transparent shape). */

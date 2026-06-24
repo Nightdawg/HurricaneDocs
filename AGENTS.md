@@ -108,11 +108,18 @@ HurricaneDocs/
   genuinely relevant. For large/long videos, host externally (YouTube/Streamable) and embed
   a link instead - GitHub Pages has a 1 GB site limit and 100 MB per-file limit.
 - **Do NOT use Git LFS for media** - GitHub Pages does not serve LFS files (images break).
-- **Branding:** accent color is a "storm blue". Change colors in `custom.css`. Logo/favicon
-  are in `docs/public/`. The home hero uses `docs/public/logo-h.png` - the isolated golden
-  "H" on a transparent background (extracted from the Hurricane app icon), with a soft drop
-  shadow + sizing/position tweaks applied in `custom.css` (`.VPHero .image-src` / hero rules).
-  The small nav logo and favicon still use the original `logo.png` / `favicon.png`.
+- **Branding:** accent color is a **gold/orange** theme (was "storm blue"). Change colors in
+  `custom.css` (`--vp-c-brand-*` for light/dark, `--vp-button-brand-*` for buttons, and the
+  `--vp-home-hero-*` vars for the title gradient + glow). The home hero glow is a soft, even
+  **gray** bloom (a square `.VPHero .image-bg` so it spreads evenly behind the portrait H).
+  Logo/favicon are in `docs/public/`. The home hero uses `docs/public/logo-h.png` - the
+  isolated golden "H" on a transparent background (extracted from the Hurricane app icon),
+  with a soft drop shadow + sizing/position tweaks applied in `custom.css`
+  (`.VPHero .image-src` / hero rules). The small nav logo and favicon still use the original
+  `logo.png` / `favicon.png`.
+- **Dark mode only:** the site is forced dark via `appearance: 'force-dark'` in
+  `config.mts`, and the light/dark toggle is hidden. The owner dislikes light mode, so there
+  is intentionally no light theme to maintain.
 - **Footer:** message only, no "made with love" style copyright line (owner removed it).
 - **Screenshots / game assets:** in-game *Haven & Hearth* art (screenshots/GIFs/videos) is
   the property of the game's developers (Seatribe - Jorb and Loftar), all rights reserved,

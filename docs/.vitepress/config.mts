@@ -17,6 +17,9 @@ export default defineConfig({
   cleanUrls: true,
   ignoreDeadLinks: true,
 
+  // Dark mode only: always render dark and hide the light/dark toggle.
+  appearance: 'force-dark',
+
   // Pages excluded from the build entirely (not rendered, not in search).
   // These are kept in the repo as references but hidden from the published site.
   // Remove a path from this list to publish that page.
@@ -26,7 +29,7 @@ export default defineConfig({
   // path must be included manually for local asset URLs.
   head: [
     ['link', { rel: 'icon', href: '/HurricaneDocs/favicon.png' }],
-    ['meta', { name: 'theme-color', content: '#2b9bd6' }],
+    ['meta', { name: 'theme-color', content: '#f0961f' }],
   ],
 
   themeConfig: {

@@ -81,7 +81,8 @@ HurricaneDocs/
          └─ components/
             ├─ Video.vue             # <Video src="media/x.mp4" /> embed
             ├─ Changelog.vue         # renders the releases timeline
-            └─ Hotspots.vue          # interactive screenshot with hover/tap hotspots
+            ├─ Hotspots.vue          # interactive screenshot with hover/tap hotspots
+            └─ MenuMap.vue           # clickable screenshot: buttons link to panel pages
 ```
 
 ---
@@ -148,10 +149,22 @@ HurricaneDocs/
   POSTs a `repository_dispatch` (`new-release`) to HurricaneDocs using the
   `DOCS_DISPATCH_TOKEN` secret. The docs `deploy.yml` listens for that event and
   rebuilds + redeploys. So publishing a Hurricane release now auto-refreshes the changelog.
-- **Custom components:** `Video.vue` (MP4 embeds), `Changelog.vue` (releases timeline), and
+- **Custom components:** `Video.vue` (MP4 embeds), `Changelog.vue` (releases timeline),
   `Hotspots.vue` (interactive screenshot: percentage-based regions with always-visible
   numbered markers; hover/tap highlights a region, dims the rest, pops it out, shows a
-  callout). Registered in `docs/.vitepress/theme/index.ts`.
+  callout), and `MenuMap.vue` (clickable screenshot: percentage-based regions rendered as
+  `<a>` links so buttons in a menu screenshot navigate to each panel's page; hover shows a
+  highlight + label tooltip). Registered in `docs/.vitepress/theme/index.ts`.
+- **Interactive Options Menu Overview** (`docs/features/options-menu.md`): uses `MenuMap`
+  to make the two settings screenshots clickable, with a matching text link list under each
+  image (single source of truth: the `mainButtons` / `advancedButtons` arrays in the page's
+  `<script setup>` drive both the overlay and the list). Region coordinates were measured by
+  auto-detecting the gold button borders (gold-mask -> connected components -> bounding
+  boxes in % of the image); if the screenshots are re-cropped, the coordinates must be
+  re-measured. The 16 panel link targets (e.g. `/features/interface-settings`) are
+  intentional placeholders - most panel pages don't exist yet, so those links 404 for now
+  (owner is fine with this; `ignoreDeadLinks: true` keeps the build green). The main-menu
+  "Advanced Settings" button links to the in-page `#advanced-settings` section.
 - **Component image gotcha (IMPORTANT):** images used *inside* custom components must be
   passed as a **Vite import**, not a bare `"media/..."` string. `withBase()` did NOT resolve
   bare strings correctly in this component context (the rendered `<img src>` stayed relative
@@ -174,7 +187,7 @@ HurricaneDocs/
 | Features overview | `docs/features/index.md` | Placeholder list |
 | Login Screen | `docs/features/login-screen.md` | Done (interactive Hotspots screenshot) |
 | Character Selection Screen | `docs/features/character-selection.md` | Done (interactive Hotspots screenshot) |
-| Options Menu Overview | `docs/features/options-menu.md` | Done (two cropped, centered screenshots; no hotspots) |
+| Options Menu Overview | `docs/features/options-menu.md` | Done (interactive MenuMap: clickable buttons + link lists; transparent cropped screenshots) |
 | Example feature | `docs/features/example-feature.md` | Hidden from site (excluded via `srcExclude` in config.mts); kept as a rendered reference. Delete once real pages exist. |
 | Feature template | `docs/features/template.md` | Hidden from site (excluded via `srcExclude`); copy it to start a new feature page. |
 | Changelog | `docs/changelog/index.md` | Done (auto-generated) |
@@ -190,7 +203,7 @@ Track which Hurricane features have dedicated doc pages. Update as pages are add
 | --- | --- | --- |
 | Login Screen | `docs/features/login-screen.md` | Documented (interactive Hotspots) |
 | Character Selection Screen | `docs/features/character-selection.md` | Documented (interactive Hotspots) |
-| Options menu / settings panels | `docs/features/options-menu.md` | Documented (overview only; per-category pages pending) |
+| Options menu / settings panels | `docs/features/options-menu.md` | Documented (interactive hub: clickable buttons link to per-category panel pages, most of which are not written yet) |
 | Alarm sounds (animals, combat, priority targets) | _none yet_ | Not documented |
 | Map icon presets / custom minimap markers | _none yet_ | Not documented |
 | Private web-map server integration | _none yet_ | Not documented |
@@ -216,16 +229,18 @@ add them). Examples to replace:
 ### Client "walkthrough" series (document features in the order a user meets them)
 - [x] Login Screen (`docs/features/login-screen.md`) - interactive Hotspots screenshot.
 - [x] Character Selection Screen (`docs/features/character-selection.md`) - interactive Hotspots.
-- [x] Options Menu Overview (`docs/features/options-menu.md`) - two cropped, centered
-  screenshots (main menu + Advanced Settings), no hotspots. Acts as the hub for future
-  per-category settings pages.
+- [x] Options Menu Overview (`docs/features/options-menu.md`) - two cropped, transparent
+  screenshots (main menu + Advanced Settings) made interactive with `MenuMap`: the buttons
+  are clickable and link to each panel's page, with matching text link lists below. Acts as
+  the hub for the per-category settings pages.
 - [ ] **TODO (owner asked):** add a short closing line at the bottom of the Login Screen page
   linking to Character Selection (e.g. "Once you log in, you reach character selection ->").
   Now actionable since the Character Selection page exists.
 - [ ] Per-category Advanced Settings pages (Interface, Display, Action Bars, Camera, Combat,
   World Graphics, Quality Display, Hiding, Chat, Alarms & Sounds, Altered Gameplay, Gameplay
-  Automation, Aggro Exclusion, Auto-Loot, Server Integration) - linked from the Options
-  Menu Overview hub as they are written.
+  Automation, Aggro Exclusion, Auto-Loot, Server Integration) - already linked from the
+  Options Menu Overview hub (those links 404 until the pages exist). Use the exact slugs from
+  the `advancedButtons` array in `options-menu.md` when creating them.
 - [ ] Next walkthrough page: the in-game screen / HUD (after Character Selection).
 
 ---

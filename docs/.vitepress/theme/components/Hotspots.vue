@@ -289,11 +289,12 @@ function calloutStyle(r: Region) {
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  color: #fff;
-  background: var(--vp-c-brand-1);
-  border: 2px solid rgba(255, 255, 255, 0.9);
+  color: #1a1a1a;
+  background: #ffffff;
+  border: 2px solid rgba(0, 0, 0, 0.9);
   border-radius: 999px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.7),
+    0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hs__region.is-on .hs__marker {
@@ -331,8 +332,9 @@ function calloutStyle(r: Region) {
   height: 20px;
   margin-right: 8px;
   font-size: 12px;
-  color: #fff;
-  background: var(--vp-c-brand-1);
+  color: #1a1a1a;
+  background: #ffffff;
+  border: 1.5px solid rgba(0, 0, 0, 0.9);
   border-radius: 999px;
   flex: none;
 }

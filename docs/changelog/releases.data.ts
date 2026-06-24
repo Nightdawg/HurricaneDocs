@@ -33,10 +33,14 @@ const md = new MarkdownIt({ html: false, linkify: true, breaks: false })
 
 function formatDate(iso: string): string {
   try {
+    // Pin to UTC so the date is identical no matter where the build runs
+    // (local machine vs the UTC GitHub Actions runner). GitHub stores release
+    // timestamps in UTC, so this matches the live site deterministically.
     return new Date(iso).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      timeZone: 'UTC',
     })
   } catch {
     return iso

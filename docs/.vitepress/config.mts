@@ -77,6 +77,7 @@ export default defineConfig({
             { text: 'Overview', link: '/features/' },
             { text: 'Login Screen', link: '/features/login-screen' },
             { text: 'Character Selection Screen', link: '/features/character-selection' },
+            { text: 'Options Menu Overview', link: '/features/options-menu' },
           ],
         },
       ],

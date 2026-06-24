@@ -174,6 +174,7 @@ HurricaneDocs/
 | Features overview | `docs/features/index.md` | Placeholder list |
 | Login Screen | `docs/features/login-screen.md` | Done (interactive Hotspots screenshot) |
 | Character Selection Screen | `docs/features/character-selection.md` | Done (interactive Hotspots screenshot) |
+| Options Menu Overview | `docs/features/options-menu.md` | Done (two cropped, centered screenshots; no hotspots) |
 | Example feature | `docs/features/example-feature.md` | Hidden from site (excluded via `srcExclude` in config.mts); kept as a rendered reference. Delete once real pages exist. |
 | Feature template | `docs/features/template.md` | Hidden from site (excluded via `srcExclude`); copy it to start a new feature page. |
 | Changelog | `docs/changelog/index.md` | Done (auto-generated) |
@@ -189,6 +190,7 @@ Track which Hurricane features have dedicated doc pages. Update as pages are add
 | --- | --- | --- |
 | Login Screen | `docs/features/login-screen.md` | Documented (interactive Hotspots) |
 | Character Selection Screen | `docs/features/character-selection.md` | Documented (interactive Hotspots) |
+| Options menu / settings panels | `docs/features/options-menu.md` | Documented (overview only; per-category pages pending) |
 | Alarm sounds (animals, combat, priority targets) | _none yet_ | Not documented |
 | Map icon presets / custom minimap markers | _none yet_ | Not documented |
 | Private web-map server integration | _none yet_ | Not documented |
@@ -214,9 +216,16 @@ add them). Examples to replace:
 ### Client "walkthrough" series (document features in the order a user meets them)
 - [x] Login Screen (`docs/features/login-screen.md`) - interactive Hotspots screenshot.
 - [x] Character Selection Screen (`docs/features/character-selection.md`) - interactive Hotspots.
+- [x] Options Menu Overview (`docs/features/options-menu.md`) - two cropped, centered
+  screenshots (main menu + Advanced Settings), no hotspots. Acts as the hub for future
+  per-category settings pages.
 - [ ] **TODO (owner asked):** add a short closing line at the bottom of the Login Screen page
   linking to Character Selection (e.g. "Once you log in, you reach character selection ->").
   Now actionable since the Character Selection page exists.
+- [ ] Per-category Advanced Settings pages (Interface, Display, Action Bars, Camera, Combat,
+  World Graphics, Quality Display, Hiding, Chat, Alarms & Sounds, Altered Gameplay, Gameplay
+  Automation, Aggro Exclusion, Auto-Loot, Server Integration) - linked from the Options
+  Menu Overview hub as they are written.
 - [ ] Next walkthrough page: the in-game screen / HUD (after Character Selection).
 
 ---

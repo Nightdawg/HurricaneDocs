@@ -24,6 +24,8 @@ These are the kinds of features Hurricane offers. Pages will be added under each
   options, server status, and more.
 - [Character Selection Screen](./character-selection) - pick a character, check your account status,
   or log back out.
+- [Options Menu Overview](./options-menu) - how Hurricane's settings are split into dedicated
+  panels, including the Advanced Settings hub.
 
 <!--
   Add new feature links here as you create pages, for example:
